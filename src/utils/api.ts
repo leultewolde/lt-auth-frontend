@@ -10,12 +10,11 @@ export interface QueryParams {
 }
 
 export const login = async (email: string, password: string, device: string, params: QueryParams) => {
-    const query = new URLSearchParams({
-        prefix: params.prefix,
-        host: params.host,
-        port: params.port || "80",
-        resources: params.resources || "default",
-    });
+    const filteredParams = Object.fromEntries(
+        Object.entries(params).filter(([_, value]) => value !== undefined)
+    );
+
+    const query = new URLSearchParams(filteredParams);
 
     return await axios.post(`${API_URL}/auth/login?${query}`, {
         email,
@@ -32,12 +31,11 @@ export const register = async (
     phone: string,
     params: QueryParams
 ) => {
-    const query = new URLSearchParams({
-        prefix: params.prefix,
-        host: params.host,
-        port: params.port || "80",
-        resources: params.resources || "default",
-    });
+    const filteredParams = Object.fromEntries(
+        Object.entries(params).filter(([_, value]) => value !== undefined)
+    );
+
+    const query = new URLSearchParams(filteredParams);
 
     return await axios.post(`${API_URL}/auth/register?${query}`, {
         firstName,
