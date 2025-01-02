@@ -4,6 +4,9 @@ import React, {Suspense, useEffect} from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 
+console.log(process.env.NODE_ENV);
+console.log(process.env.NEXT_PUBLIC_API_URL);
+
 function transformUrlToObject(url: string): {
     prefix: string;
     host: string;
