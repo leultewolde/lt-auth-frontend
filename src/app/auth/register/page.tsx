@@ -23,14 +23,14 @@ const RegisterContent: React.FC = () => {
         const resources = searchParams.get("resources") || undefined;
 
         try {
-            await register(firstName, lastName, email, password, phone, {
+            const response = await register(firstName, lastName, email, password, phone, {
                 prefix,
                 host,
                 port,
                 resources,
             });
             showSnackbar("Register successful. Redirecting...", "success");
-            router.push(`/auth/login?prefix=${prefix}&host=${host}&port=${port}&resources=${resources}`);
+            router.push(response.data.redirectUrl);
         } catch (error) {
             console.log(error);
             showSnackbar("Registration failed. Please try again.", "error");
