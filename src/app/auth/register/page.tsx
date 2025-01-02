@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, {Suspense, useState} from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button, TextField, Stack } from "@mui/material";
 import Layout from "../../components/Layout";
 import { register } from "@/utils/api";
 import {useSnackbar} from "@/app/components/SnackbarContext";
 
-const Register: React.FC = () => {
+const RegisterContent: React.FC = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -95,4 +95,10 @@ const Register: React.FC = () => {
     );
 };
 
-export default Register;
+export default function RegisterPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RegisterContent />
+        </Suspense>
+    );
+}

@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
+
+import React, {Suspense} from "react";
 import Layout from "../components/Layout";
 import {useSearchParams} from "next/navigation";
 
-const Dashboard: React.FC = () => {
+const DashboardContent: React.FC = () => {
     const searchParams = useSearchParams();
 
     // Convert query parameters into an object for display
@@ -19,4 +20,10 @@ const Dashboard: React.FC = () => {
     );
 };
 
-export default Dashboard;
+export default function DashboardPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <DashboardContent />
+        </Suspense>
+    );
+}

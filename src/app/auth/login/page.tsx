@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, {Suspense, useEffect, useState} from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button, TextField, Stack } from "@mui/material";
 import Layout from "../../components/Layout";
@@ -8,7 +8,7 @@ import { login } from "@/utils/api";
 import DeviceDetector from "device-detector-js";
 import {useSnackbar} from "@/app/components/SnackbarContext";
 
-const Login: React.FC = () => {
+const LoginContent: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [deviceString, setDeviceString] = useState("unknown-unknown-unknown-unknown");
@@ -79,4 +79,10 @@ const Login: React.FC = () => {
     );
 };
 
-export default Login;
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <LoginContent />
+        </Suspense>
+    );
+}

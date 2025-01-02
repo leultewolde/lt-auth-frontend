@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {Suspense, useEffect} from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 
@@ -34,10 +34,17 @@ function objectToQueryParams(obj: { [key: string]: any }): string {
         .join('&');
 }
 
-const Home: React.FC = () => {
+const HomeContent: React.FC = () => {
     const router = useRouter();
 
-    const redirectParams = objectToQueryParams(transformUrlToObject(document.location.href ? document.location.href + "dashboard" : "http://localhost:3000/dashboard"))
+    const [redirectParams, setRedirectParams] = React.useState("");
+
+    useEffect(() => {
+        const params = objectToQueryParams(
+            transformUrlToObject(window.location.href + "dashboard")
+        );
+        setRedirectParams(params);
+    }, []);
 
     return (
         <Stack
@@ -72,4 +79,10 @@ const Home: React.FC = () => {
     );
 };
 
-export default Home;
+export default function HomePage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <HomeContent />
+        </Suspense>
+    );
+}
